@@ -11,9 +11,39 @@
             event.preventDefault();
         }
 
+        const isGoogleImageDropUri = (uri) => {
+            const url = new URL(uri)
+            return url.hostname === 'www.google.com' && url.pathname === '/url' && url.searchParams.get('source') === 'images';
+        }
+
+        const getImageUrl = (dataTransfer) => {
+            if (!dataTransfer) {
+                return ''
+            }
+
+            const text = dataTransfer.getData('text')
+            if (text) {
+                return text
+            }
+
+            const uriList = dataTransfer.getData('text/uri-list')
+
+            if (isGoogleImageDropUri(uriList)) {
+                const htmlData = dataTransfer.getData('text/html')
+                const parser = new DOMParser();
+                const imageDoc = parser.parseFromString(htmlData, 'text/html')
+                const image = imageDoc.querySelector('img')
+                return image.src
+            } else {
+                return uriList
+            }
+            
+            return ''
+        }
+
         const drop = (event) => {
             event.preventDefault();
-            const imageUrl = event.dataTransfer.getData("text");
+            const imageUrl = getImageUrl(event.dataTransfer);
             const imageElement = document.getElementById('image')
             imageElement.src = imageUrl
             imageElement.className = 'bright'
