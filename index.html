@@ -11,9 +11,25 @@
             event.preventDefault();
         }
 
-        const isGoogleImageDropUri = (uri) => {
-            const url = new URL(uri)
-            return url.hostname === 'www.google.com' && url.pathname === '/url' && url.searchParams.get('source') === 'images';
+        const extractFromGoogleImagesDrop = (dataTransfer) => {
+            const uriList = dataTransfer.getData('text/uri-list')
+            const url = new URL(uriList)
+
+            if (!url.hostname === 'www.google.com') {
+                return ''
+            }
+
+            if (url.pathname === '/url' && url.searchParams.get('source') === 'images') {
+                const htmlData = dataTransfer.getData('text/html')
+                const parser = new DOMParser();
+                const imageDoc = parser.parseFromString(htmlData, 'text/html')
+                const image = imageDoc.querySelector('img')
+                return image.src
+            }
+
+            if (url.pathname === '/imgres') {
+                return url.searchParams.get('imgurl')
+            }
         }
 
         const getImageUrl = (dataTransfer) => {
@@ -28,6 +44,13 @@
 
             const uriList = dataTransfer.getData('text/uri-list')
 
+            const googleImagesImageUrl = extractFromGoogleImagesDrop(dataTransfer)
+
+            if (googleImagesImageUrl) {
+                return googleImagesImageUrl
+            } else {
+                return uriList
+            }
             if (isGoogleImageDropUri(uriList)) {
                 const htmlData = dataTransfer.getData('text/html')
                 const parser = new DOMParser();
