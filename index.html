@@ -37,6 +37,12 @@
                 return ''
             }
 
+            const googleImagesImageUrl = extractFromGoogleImagesDrop(dataTransfer)
+
+            if (googleImagesImageUrl) {
+                return googleImagesImageUrl
+            }
+
             const text = dataTransfer.getData('text')
             if (text) {
                 return text
@@ -44,20 +50,7 @@
 
             const uriList = dataTransfer.getData('text/uri-list')
 
-            const googleImagesImageUrl = extractFromGoogleImagesDrop(dataTransfer)
-
-            if (googleImagesImageUrl) {
-                return googleImagesImageUrl
-            } else {
-                return uriList
-            }
-            if (isGoogleImageDropUri(uriList)) {
-                const htmlData = dataTransfer.getData('text/html')
-                const parser = new DOMParser();
-                const imageDoc = parser.parseFromString(htmlData, 'text/html')
-                const image = imageDoc.querySelector('img')
-                return image.src
-            } else {
+            if (uriList) {
                 return uriList
             }
             
