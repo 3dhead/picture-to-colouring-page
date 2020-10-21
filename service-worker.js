@@ -1,7 +1,6 @@
 var cacheStorageKey = "picture-to-colouring-page-v1";
 
 var cachedPaths = [
-  "/",
   "index.html",
   "assets/style.css",
   "assets/logo.svg",
