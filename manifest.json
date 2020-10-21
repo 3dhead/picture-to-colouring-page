@@ -1,0 +1,26 @@
+{
+  "name": "Picture to colouring page",
+  "short_name": "Colouring page creator",
+  "display": "minimal-ui",
+  "start_url": "/",
+  "theme_color": "lightsteelblue",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "256x256",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/maskable_icon.png",
+      "sizes": "512x521",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
