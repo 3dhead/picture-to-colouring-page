@@ -2,7 +2,7 @@
   "name": "Picture to colouring page",
   "short_name": "Colouring page creator",
   "display": "minimal-ui",
-  "start_url": "/",
+  "start_url": "/picture-to-colouring-page/",
   "theme_color": "lightsteelblue",
   "background_color": "#fff",
   "icons": [
