@@ -31,13 +31,10 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(activate());
 });
 
-self.addEventListener("fetch", (event) => {
-  const cachedFetch = async () => {
-    const response = await caches.match(event.request);
-    if (response) {
-      return response;
-    }
-    return fetch(event.request.url);
-  };
-  event.respondWith(cachedFetch());
+self.addEventListener("fetch", async (event) => {
+  const response = await caches.match(event.request);
+  if (response) {
+    return event.respondWith(response);
+  }
+  return;
 });
